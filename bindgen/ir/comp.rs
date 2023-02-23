@@ -1290,7 +1290,7 @@ impl CompInfo {
 
         let kind = kind?;
 
-        debug!("CompInfo::from_ty({:?}, {:?})", kind, cursor);
+        println!("CompInfo::from_ty({:?}, {:?})", kind, cursor);
 
         let mut ci = CompInfo::new(kind);
         ci.visibility = Visibility::from(cursor.access_specifier());
@@ -1299,6 +1299,7 @@ impl CompInfo {
                 CXCursor_ParmDecl => true,
                 CXCursor_StructDecl | CXCursor_UnionDecl |
                 CXCursor_ClassDecl => !cur.is_definition(),
+                CXCursor_ClassTemplate => kind == CompKind::Union && !cur.is_definition(), 
                 _ => false,
             });
 
